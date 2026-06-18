@@ -8,7 +8,7 @@ Cette fiche détaille l'implémentation du modèle de cloisonnement administrati
 
 Le principe fondamental est l'**étanchéité stricte des privilèges**. Les comptes à hauts privilèges ne doivent jamais laisser d'empreintes mémorielles (dans LSASS) sur des machines moins sécurisées ou exposées.
 
-[Image of Microsoft Enterprise Access Model tiering architecture]
+
 
 ### Tier 0 : Contrôle d'Identité Ultime
 * **Périmètre :** Contrôleurs de domaine (DC), PKI d'entreprise (ADCS), serveurs d'authentification (MFA, RADIUS), serveurs de synchronisation Cloud (Entra ID Connect), et tous les comptes d'administration associés (Admins du domaine, Admins de l'entreprise).
@@ -51,4 +51,17 @@ Fonctionnalité de sécurité Windows basée sur la virtualisation (**VBS - Virt
 
 ### C. Les gMSA (Group Managed Service Accounts)
 Comptes de services managés de manière centralisée par l'Active Directory.
-* **Avantage Sec
+* **Avantage SecOps :** Le mot de passe (complexe, 240 caractères) est automatiquement généré et modifié par les contrôleurs de domaine tous les 30 jours. Aucun humain ne le connaît.
+* **Impact Cyber :** Élimine le risque de **Kerberoasting** (car le mot de passe est trop robuste pour être cassé par force brute) et évite d'avoir des mots de passe de comptes de service qui expirent jamais ou stockés en clair dans des scripts.
+
+### D. Les PAW (Privileged Access Workstations)
+* **Concept :** Postes de travail physiques ultra-durcis, dédiés **uniquement** aux tâches d'administration du Tier 0.
+* **Hardening du poste :** Pas d'accès Internet direct (sauf vers les DC), pas de messagerie électronique (bloque le phishing), chiffrement BitLocker strict, pas de droits admin locaux pour l'utilisateur au quotidien, et intégrité du code vérifiée au démarrage (Secure Boot).
+
+---
+
+## 4. Résumé des Attaques vs Contre-mesures
+
+* **Credential Dumping (LSASS) :** Contré par *Credential Guard* et le groupe *Protected Users*.
+* **Mouvements Latéraux (Pivotement) :** Contré par les *GPO de restriction de connexion* (Tiering) et la désactivation des comptes administrateurs locaux identiques.
+* **Kerberoasting :** Contré par la migration des comptes de services vers des *gMSA*.
