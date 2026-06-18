@@ -6,7 +6,7 @@
 
 ## 🛡️ 1. Gestion des Identités (Microsoft Entra ID)
 
-[cite_start]Pour permettre à un équipement ou un service tiers d'interagir avec le cloud, il est nécessaire de l'enregistrer dans l'annuaire via une identité numérique dédiée[cite: 46].
+[cite_start]Pour permettre à un équipement ou un service tiers d'interagir avec le cloud, il est nécessaire de l'enregistrer dans l'annuaire via une identité numérique dédiée[cite: 46]
 
 * [cite_start]**Inscription d'application (App Registration) :** Enregistrement de l'entité sous un nom d'affichage explicite, tel que `Scanner SMTP AUTH2`[cite: 46, 72].
 * [cite_start]**Configuration d'accès (Tenant) :** Choix du mode **Locataire unique** (*Single Tenant*) pour restreindre l'usage de l'application exclusivement aux comptes de l'organisation[cite: 79].
